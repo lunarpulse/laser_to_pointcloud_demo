@@ -3,15 +3,15 @@
   <include file="$(find rrbot_control)/launch/rrbot_control.launch"/>
 
   <node type="laser_scan_assembler" pkg="laser_assembler"
-      name="my_assembler">
+      name="my_assembler" required="true" >
     <remap from="scan" to="/rrbot/laser/scan"/>
     <param name="max_scans" type="int" value="200" />
     <param name="fixed_frame" type="string" value="world" />
   </node>
 
-  <node type ="laser2pc.py" pkg="laser_to_pcl" name="laser2pc"/>
+  <node type ="laser2pc.py" pkg="laser_to_pcl" required="true" name="laser2pc"/>
+  <node type ="rrbot_cmd.py" pkg="laser_to_pcl" required="true" name="rrbot_cmd"/>
 
   <node type="rviz" name="rviz" pkg="rviz" args="-d $(find laser_to_pcl)/launch/rviz/laser_to_pcl.rviz" />
-  <node type ="rrbot_cmd.py" pkg="laser_to_pcl" name="rrbot_cmd"/>
-
+  <node type="rqt_graph" name="rqt_graph" pkg="rqt_graph" args="" />
 </launch>
